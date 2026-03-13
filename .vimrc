@@ -482,8 +482,8 @@ nnoremap <Leader>vG <Cmd>vimgrep // **<CR>
 nnoremap <Leader>vg <Cmd>vimgrep // %<CR>
 
 " Read and Write Sessions to session directory
-nnoremap <Leader>rs <Cmd>ReadSession <C-R>=expand(g:sessionfile_dir)<CR>
-nnoremap <Leader>ms <Cmd>MakeSession <C-R>=expand(g:sessionfile_dir)<CR>
+nnoremap <Leader>rs :ReadSession <C-R>=expand(g:sessionfile_dir)<CR>
+nnoremap <Leader>ms :MakeSession <C-R>=expand(g:sessionfile_dir)<CR>
 nnoremap <Leader>ws <Cmd>WriteCurrentSession<CR>
 nnoremap <Leader>pcs <Cmd>echo g:current_session<CR>
 
