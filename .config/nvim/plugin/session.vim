@@ -1,5 +1,12 @@
 " Default values
-let g:sessionfile_dir = '$HOME/.config/nvim/session/'
+if has('win32')
+	let s:vimdir = '~/vimfiles/'
+elseif has('nvim')
+	let s:vimdir = '~/.config/nvim/'
+else
+	let s:vimdir = '~/.vim/'
+endif
+let g:sessionfile_dir = s:vimdir .. 'session/'
 let g:sessionfile_autosave = v:true
 
 function! ReadSession(file)
