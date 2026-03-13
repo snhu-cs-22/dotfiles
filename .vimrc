@@ -204,6 +204,10 @@ if executable('git')
 	Plug 'tpope/vim-dadbod'
 	Plug 'vim-scripts/dbext.vim'
 
+	if has('nvim')
+		Plug 'nvim-treesitter/nvim-treesitter', { 'branch': 'master', 'do': { -> :TSUpdate } }
+	endif
+
 	call plug#end()
 endif
 "}}}
