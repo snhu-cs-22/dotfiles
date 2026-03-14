@@ -177,7 +177,6 @@ if executable('git')
 	Plug 'godlygeek/tabular'
 
 	" Shortcuts/keybinds
-	Plug 'tpope/vim-commentary'
 	Plug 'tpope/vim-repeat'
 	Plug 'tpope/vim-surround'
 	Plug 'tpope/vim-unimpaired'
@@ -206,6 +205,8 @@ if executable('git')
 
 	if has('nvim')
 		Plug 'nvim-treesitter/nvim-treesitter', { 'branch': 'master', 'do': { -> :TSUpdate } }
+	else
+		Plug 'tpope/vim-commentary'
 	endif
 
 	call plug#end()
