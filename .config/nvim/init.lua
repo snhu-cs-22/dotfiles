@@ -7,3 +7,5 @@ vim.o.winborder = "rounded"
 require('mason').setup()
 
 require('config.plugins.treesitter')
+
+vim.lsp.enable('rust-analyzer')
