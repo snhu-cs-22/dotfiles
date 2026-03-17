@@ -9,3 +9,4 @@ require('mason').setup()
 require('config.plugins.treesitter')
 
 vim.lsp.enable('rust-analyzer')
+vim.lsp.enable('python-lsp-server')
