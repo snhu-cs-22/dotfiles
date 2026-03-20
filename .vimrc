@@ -154,13 +154,19 @@ vnoremap <silent> # <Cmd><C-U>
 " vim-plug plugin manager (https://www.github.com/junegunn/vim-plug)
 
 if executable('git')
+	" Set config/plugin directory based on OS/type of Vim
 	if has('win32')
-		call plug#begin('~/vimfiles/plugged')
+		let s:config_dir = '~/vimfiles/'
 	elseif has('nvim')
-		call plug#begin('~/.config/nvim/plugged')
+		let s:config_dir = '~/.config/nvim/'
 	else
-		call plug#begin('~/.vim/plugged')
+		let s:config_dir = '~/.vim/'
 	endif
+	let s:config_dir = expand(s:config_dir)
+	let s:plug_dir = s:config_dir .. 'plugged/'
+	let s:plug_snapshot = s:config_dir .. 'plug_snapshot.vim'
+
+	call plug#begin(s:plug_dir)
 
 	" Git
 	Plug 'tpope/vim-fugitive'
@@ -211,6 +217,11 @@ if executable('git')
 	endif
 
 	call plug#end()
+
+	" Auto-install plugins from snapshot file if there is no directory
+	if !isdirectory(s:plug_dir)
+		exe 'source ' .. s:plug_snapshot
+	endif
 endif
 "}}}
 
