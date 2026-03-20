@@ -178,6 +178,8 @@ if executable('git')
 	if has('nvim')
 		Plug 'nvim-treesitter/nvim-treesitter', { 'branch': 'master', 'do': { -> :TSUpdate } }
 		Plug 'mason-org/mason.nvim'
+		Plug 'neovim/nvim-lspconfig'
+		Plug 'mason-org/mason-lspconfig.nvim'
 	else
 		Plug 'tpope/vim-commentary'
 	endif

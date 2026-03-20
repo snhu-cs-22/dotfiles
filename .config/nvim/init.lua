@@ -9,9 +9,5 @@ vim.diagnostic.config({
 })
 
 -- Config Neovim/Lua-based plugins
-require('mason').setup()
-
+require('config.plugins.mason')
 require('config.plugins.treesitter')
-
-vim.lsp.enable('rust-analyzer')
-vim.lsp.enable('python-lsp-server')
