@@ -1,0 +1,450 @@
+# Options {{{
+
+set shell /usr/bin/bash
+set shellopts "-eu"
+set ifs "\n"
+set previewer ~/.config/lf/previewer_sandbox
+set period 1
+set info size
+set icons
+set dircounts
+set cursorpreviewfmt "\033[7;7m"
+set rulerfmt  "%a| %p| \033[7;31m %m \033[0m| \033[7;33m %c \033[0m| \033[7;35m %s \033[0m| \033[7;36m %v \033[0m|f=`%f',| %d|  %i/%t  %P"
+set infotimefmtnew "2006-01-02 15:04"
+set infotimefmtold "2006-01-02 15:04"
+set truncatechar "…"
+set truncatepct 50
+set hidden
+set hiddenfiles '^.*:*.pyc$:*.pyo$:*.bak$:*.swp$:lost+found:__cache__:__pycache__'
+set mouse
+set scrolloff 100
+
+# }}}
+
+# Keybinds {{{
+
+# Movement
+map \[        move-parent up
+map \]        move-parent down
+map <c-o>     jump-prev
+map <c-i>     jump-next
+map <tab>     jump-next
+map <c-f>     fuzzy-select
+map <a-c>     fuzzy-cd
+map gL        follow-link
+
+# Quick commands
+map @:        :read; cmd-history-prev; cmd-enter
+cmap <c-f>    fuzzy-history-search
+map W         !true
+map S         source ~/.config/lf/lfrc
+map =         push :chmod<space>
+map +         push :mkdir<space>
+map *         push :glob-select<space>
+map \#        push :glob-unselect<space>
+map x         $"$f"
+map X         !"$f"
+map <c-z>     suspend
+
+# Opening files
+map C         push :compress<space>
+map E         extract
+map i         inspect
+map <enter>   open
+map o&        push :open-with-gui<space>
+map o$        push :open-with-tui<space>
+map o%        push :open-with-cli<space>
+map O         open-with
+
+# Renaming
+map I         :rename; cmd-home
+map A         rename
+map gA        :rename; cmd-end
+map c
+map cc        :rename; cmd-delete-home; cmd-delete-end
+map ct.       :rename; cmd-delete-home
+map B         bulkrename
+
+# Copying/yanking
+map y
+map yy        copy
+map ya        clipboard-add --copy
+map yr        clipboard-remove --copy
+map yt        clipboard-toggle --copy
+map yp        yank-paths
+map yd        yank-dirname
+map yn        yank-basename
+map y.        yank-basename-without-extension
+
+# Cutting
+map d
+map dd        cut
+map da        clipboard-add --cut
+map dr        clipboard-remove --cut
+map dt        clipboard-toggle --cut
+map dD        delete
+map dT        trash
+map dg        drag-and-drop
+map du        disk-usage
+map dU        disk-usage-recursive
+
+# Pasting
+map p
+map pp        paste-shell
+map po        paste-shell --overwrite
+map pl        paste-link
+map pL        paste-link --relative
+map phl       paste-link --hard
+map pP        paste
+
+# Undoing/clearing
+map u
+map uu        unselect
+map uv        unselect
+map u<space>  unselect
+map ud        clear
+map uy        clear
+map um        mark-remove
+
+# Marks
+map `         mark-load
+map \'        mark-load
+map m         mark-save
+
+# Quick cd
+map gh        cd ~
+map ge        cd /etc
+map gu        cd /usr
+map gd        cd /dev
+map go        cd /opt
+map gv        cd /var
+map gm        cd /media
+map gi        eval cd '/run/media/$USER'
+map gM        cd /mnt
+map gs        cd /srv
+map gp        cd /tmp
+map gr        cd /
+map g/        cd /
+map g?        cd /usr/share/doc/lf
+
+# Setting file info
+map M
+map MM        set info custom
+map Ma        set info atime
+map Mc        set info ctime
+map Ms        set info size
+map Mt        set info time
+
+# Option toggles
+map zc        set collapse_preview!
+map zp        :set preview!; on-redraw
+map zd        set dirfirst!
+map zh        set hidden!
+map zm        set mouse!
+map zi        set ignorecase!
+map zs        set smartcase!
+map zf        push :setfilter<space>
+
+# }}}
+
+# Commands {{{
+
+# Hook commands {{{
+
+cmd on-load &{{
+	cd "$(dirname "$1")" || exit 1
+	[ "$(git rev-parse --is-inside-git-dir 2>/dev/null)" = false ] || exit 0
+
+	cmds=""
+
+	for file in "$@"; do
+		case "$file" in
+			*/.git|*/.git/*) continue;;
+		esac
+
+		status=$(git status --porcelain --ignored -- "$file" | cut -c1-2 | head -n1)
+
+		if [ -n "$status" ]; then
+			cmds="${cmds}addcustominfo '$file' '$status'; "
+		else
+			cmds="${cmds}addcustominfo '$file' ''; "
+		fi
+	done
+
+	lf -remote "send $id :$cmds"
+}}
+
+cmd on-cd &{{
+	# Set the terminal title to the current directory
+	printf '\033]0;lf - %s\007' "${PWD/#$HOME/\~}" > /dev/tty
+	# display git repository status in your prompt
+	source /etc/bash_completion.d/git-prompt
+	GIT_PS1_SHOWDIRTYSTATE=auto
+	GIT_PS1_SHOWSTASHSTATE=auto
+	GIT_PS1_SHOWUNTRACKEDFILES=auto
+	GIT_PS1_SHOWUPSTREAM=auto
+	GIT_PS1_COMPRESSSPARSESTATE=auto
+	GIT_PS1_SHOWCONFLICTSTATE=auto
+	GIT_PS1_DESCRIBE_STYLE='branch'
+	git="$(__git_ps1 " (%s)")" || true
+	fmt="\033[32;1m%u@%h\033[0m:\033[34;1m%w\033[0m$git\033[0m"
+	lf -remote "send $id set promptfmt \"$fmt\""
+}}
+
+# https://konfekt.github.io/blog/2024/09/15/lf-linux-windows {{{
+
+# Adjust pane ratios on window resize
+cmd on-redraw %{{
+	widths=(0 80 160)
+	if [ "$lf_preview" = true ]; then
+		ratios=("1:2" "1:3:2" "1:2:5:3")
+	else
+		ratios=("1" "1:5" "1:2:8")
+	fi
+
+	ratio=""
+	for ((i=0;i<${#widths[@]};i++)); do
+		if [ "$lf_width" -ge ${widths[i]} ]; then
+			ratio=${ratios[i]}
+		fi
+	done
+
+	lf -remote "send $id set ratios $ratio"
+}}
+
+# Unset pane_path when quitting
+cmd on-quit &printf '\033]7;\033\\' > /dev/tty
+
+# }}}
+
+# Default command overrides {{{
+
+cmd paste-shell %{{
+	set -f
+	load=$(cat ~/.local/share/lf/files)
+	mode=$(echo "$load" | head -n+1)
+	files=$(echo "$load" | tail -n+2)
+
+	flags=()
+	if [ ! -z "$@" ] && [ "$1" = '--overwrite' ]; then
+		flags+=(--update=all)
+	else
+		flags+=(--backup=numbered)
+	fi
+
+	if [ "$mode" = 'copy' ]; then
+		cp -a "${flags[@]}" $files .
+	elif [ "$mode" = 'move' ]; then
+		mv "${flags[@]}" $files .
+		rm ~/.local/share/lf/files
+		lf -remote 'send clear'
+	fi
+}}
+
+# }}}
+
+# }}}
+
+# https://github.com/gokcehan/lf/wiki/Ranger
+# File opener (Rifle)
+cmd open $set -f; rifle -p 0 $fx
+cmd open-with ${{
+	clear
+	set -f
+	rifle -l $fx | sed -e "s/:[a-Z]*:[a-Z]*:/ \| /"
+	read -p "open with: " method
+	rifle -p $method $fx
+}}
+cmd open-with-gui &"$@" $fx # opens asynchronously, intended for GUI applications
+cmd open-with-tui $"$@" $fx # opens synchronously, intended for TUI applications
+cmd open-with-cli %"$@" $fx # opens synchronously and prints to the bottom statline, intended for CLI applications
+
+# https://github.com/gokcehan/lf/wiki/Tips {{{
+
+# Use environment variables in command or mapping
+cmd eval &{{
+	cmd="send $id"
+	for arg; do
+		cmd="$cmd $(eval "printf '%s' \"$arg\"" | sed 's/\\/\\\\/g;s/ /\\ /g;s/"/\\"/g')"
+	done
+	lf -remote "$cmd"
+}}
+
+cmd follow-link %{{
+	lf -remote "send $id select \"$(readlink -- "$f" | sed 's/\\/\\\\/g;s/"/\\"/g')\""
+}}
+
+cmd paste-link %{{
+	set -f
+	files=$(cat ~/.local/share/lf/files | tail -n+2)
+	if [ -z "$@" ]; then
+		ln -si $files . && exit
+	fi
+	case "$1" in
+		--relative) ln -sir $files .;;
+		--hard) ln -i $files .;;
+		*) lf -remote "send $id echoerr \"Invalid flag: $1\"";;
+	esac
+}}
+
+cmd glob-select-recursive &{{
+	select_glob() {
+		files=$(printf '%s\0' "$@" | sed 's/ /\\ /g;s/\x00/ /g')
+		lf -remote "send $id :unselect; toggle $files"
+	}
+
+	[ "$#" -eq 1 ] || exit
+
+	# enable recursive glob, failglob, and extended glob
+	shopt -s globstar failglob extglob
+
+	select_glob $1
+}}
+
+cmd fuzzy-select ${{
+	file=$(fzf --prompt='Select file: ')
+	$lf -remote "send $id select \"$file\""
+}}
+
+cmd fuzzy-cd ${{
+	dir=$(fzf \
+		--prompt='Select dir to cd to: ' \
+		--walker=dir,hidden,follow
+	)
+	$lf -remote "send $id cd \"$dir\""
+}}
+
+cmd fuzzy-history-search ${{
+	cmd=$(
+		lf -remote "query $id history" |
+		awk -F'\t' 'NR > 1 { print $NF }' |
+		sort -u |
+		fzf --prompt='Execute command: '
+	)
+	lf -remote "send $id push ${cmd//\ /<space>}"
+}}
+
+# }}}
+
+# https://github.com/gokcehan/lf/wiki/Integrations {{{
+
+# https://github.com/gokcehan/lf/wiki/Integrations#gio-trash
+
+cmd trash ${{
+	set -f
+	if gio trash 2>/dev/null; then
+		gio trash $fx
+	fi
+}}
+
+cmd trash-restore %{{
+	set -f
+	ft=$(basename -a -- $fx | sed 's|^|trash:///|')
+	gio trash --restore $ft
+	printf 'restored'
+	printf ' %s' $(basename -a -- $fx)
+}}
+
+cmd bulkrename $set -f; vidir -- $fx
+cmd chmod %set -f; chmod "$@" -- $fx
+cmd mkdir %IFS=" "; mkdir -p -- "$*"
+cmd suspend $kill -STOP "$PPID"
+cmd inspect $LESSOPEN='| ~/.config/lf/scope-lf-wrapper.sh %s' less -R "$f"
+cmd drag-and-drop &dragon $fx
+cmd disk-usage !du -chs --apparent-size -- $fx | sort -h
+cmd disk-usage-recursive !du -ch --apparent-size -- $fx | sort -h
+
+# }}}
+
+# Jumping around
+cmd move-parent &{{
+	dironly="setlocal \"$(dirname -- "$PWD" | sed 's/\\/\\\\/g;s/"/\\"/g')\" dironly"
+	lf -remote "send $id :updir; $dironly true; $1; $dironly false; open"
+}}
+
+# Adding/removing from clipboard {{{
+
+cmd clipboard-add %{{
+	case "$1" in
+		--copy) sed -i '1s/.*/copy/' ~/.local/share/lf/files;;
+		--cut) sed -i '1s/.*/move/' ~/.local/share/lf/files;;
+		*) lf -remote "send $id echoerr \"Invalid flag: $1\"" && exit 1;;
+	esac
+	printf '%s\n' $fx >> ~/.local/share/lf/files
+	lf -remote "send $id :unselect; sync"
+}}
+
+cmd clipboard-remove %{{
+	case "$1" in
+		--copy) sed -i '1s/.*/copy/' ~/.local/share/lf/files;;
+		--cut) sed -i '1s/.*/move/' ~/.local/share/lf/files;;
+		*) lf -remote "send $id echoerr \"Invalid flag: $1\"" && exit 1;;
+	esac
+	printf '%s\n' $fx | while IFS= read -r file; do
+		sed -i "\|^$file$|d" ~/.local/share/lf/files
+	done
+	lf -remote "send $id :unselect; sync"
+}}
+
+cmd clipboard-toggle %{{
+	files=$(comm --output-delimiter= -3 \
+		<(tail -n+2 ~/.local/share/lf/files | sort) \
+		<(printf '%s\n' $fx | sort) | tr -d '\0')
+	case "$1" in
+		--copy) printf 'copy\n%s\n' $files > ~/.local/share/lf/files;;
+		--cut) printf 'move\n%s\n' $files > ~/.local/share/lf/files;;
+		*) lf -remote "send $id echoerr \"Invalid flag: $1\"" && exit 1;;
+	esac
+	lf -remote "send $id :unselect; sync"
+}}
+
+# }}}
+
+# Yank file names
+cmd yank-paths &printf '%s' $fx | xclip -i -selection clipboard
+cmd yank-dirname &printf '%s' "$PWD" | xclip -i -selection clipboard
+cmd yank-basename &basename -a -- $fx | xclip -i -selection clipboard
+cmd yank-basename-without-extension &basename -a -- $fx | cut -d. -f1 | xclip -i -selection clipboard
+
+cmd extract ${{
+	set -f
+	for file in $fx; do
+		case "$file" in
+			*.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar xjvf "$file";;
+			*.tar.gz|*.tgz) tar xzvf "$file";;
+			*.tar.xz|*.txz) tar xJvf "$file";;
+			*.zip) unzip "$file";;
+			*.rar) unrar x "$file";;
+			*.7z) 7z x "$file";;
+			*) lf -remote "send $id echoerr \"Could not find extractor for archive format.\"";;
+		esac
+	done
+}}
+
+cmd compress ${{
+	set -f
+	ARCHIVE="$@"
+	COMPRESS_DIR="$(basename -a -- "$ARCHIVE" | cut -d. -f1)"
+
+	pre() {
+		mkdir "$COMPRESS_DIR"
+		cp -ra $fx "$COMPRESS_DIR"
+	}
+	post() {
+		rm -rf "$COMPRESS_DIR"
+	}
+
+	case "$ARCHIVE" in
+		*.tar.bz|*.tar.bz2|*.tbz|*.tbz2) pre; tar cjvf "$ARCHIVE" "$COMPRESS_DIR"; post;;
+		*.tar.gz|*.tgz) pre; tar czvf "$ARCHIVE" "$COMPRESS_DIR"; post;;
+		*.tar.xz|*.txz) pre; tar cJvf "$ARCHIVE" "$COMPRESS_DIR"; post;;
+		*.zip) pre; zip "$ARCHIVE" "$COMPRESS_DIR"; post;;
+		*.7z) pre; 7z a "$ARCHIVE" "$COMPRESS_DIR"; post;;
+		*) lf -remote "send $id echoerr \"Could not find compressor for archive format\""; exit;;
+	esac
+}}
+
+# }}}
+
+&[ "$LF_LEVEL" -eq 1 ] || lf -remote "send $id echoerr \"Warning: You're in a nested lf instance!\""
+on-cd
