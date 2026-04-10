@@ -549,15 +549,21 @@ nnoremap <Leader>pdp <Cmd>!pandoc -i \"%\" -o \"%:s/\..*$/\.pdf/\" &<CR>
 " nnoremap <Leader>rm <Cmd>!rm \"%\"<CR>
 nnoremap <Leader>rm <Cmd>echo delete(expand("%"))<CR>
 
+if has('win32')
+	let g:default_opener = 'start'
+else
+	let g:default_opener = 'xdg-open'
+endif
+
 " Open current file/url with default handler
-nnoremap <Leader>of <Cmd>!xdg-open "%" &<CR>
+nnoremap <Leader>of :!<C-R>=g:default_opener<CR> "%" &<CR>
 " Open file/url under cursor with default handler
-nnoremap <Leader>oF <Cmd>!xdg-open "<cfile>" &<CR>
+nnoremap <Leader>oF :!<C-R>=g:default_opener<CR> "<cfile>" &<CR>
 
 " Open directory of current buffer
-nnoremap <Leader>od <Cmd>!xdg-open "%:h" &<CR>
+nnoremap <Leader>od :!<C-R>=g:default_opener<CR> "%:h" &<CR>
 " Open folder of current working directory
-nnoremap <Leader>owd <Cmd>!xdg-open <C-r>=getcwd()<CR>&<CR>
+nnoremap <Leader>owd :!<C-R>=g:default_opener<CR> <C-r>=getcwd()<CR>&<CR>
 " }}}
 
 " 4.2.2 Quick substitutions {{{
