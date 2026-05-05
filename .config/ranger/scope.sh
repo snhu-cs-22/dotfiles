@@ -327,6 +327,7 @@ handle_mime() {
 
         ## Video and audio
         video/* | audio/*)
+            ffprobe -hide_banner -i "${FILE_PATH}" 2>&1 && exit 5
             mediainfo "${FILE_PATH}" && exit 5
             exiftool "${FILE_PATH}" && exit 5
             exit 1;;
