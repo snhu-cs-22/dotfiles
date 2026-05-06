@@ -93,10 +93,10 @@ nnoremap <Leader>g2r <Cmd>Git bisect reset<CR>
 
 nnoremap <Leader>gdd <Cmd>Git diff<CR>
 nnoremap <Leader>gDD <Cmd>Git diff --stat<CR>
-nnoremap <Leader>gdmh <Cmd>Git diff main..HEAD<CR>
-nnoremap <Leader>gdMh <Cmd>Git diff master..HEAD<CR>
-nnoremap <Leader>gDmh <Cmd>Git diff --stat main..HEAD<CR>
-nnoremap <Leader>gDMh <Cmd>Git diff --stat master..HEAD<CR>
+nnoremap <Leader>gdm <Cmd>Git diff main..HEAD<CR>
+nnoremap <Leader>gdM <Cmd>Git diff master..HEAD<CR>
+nnoremap <Leader>gDm <Cmd>Git diff --stat main..HEAD<CR>
+nnoremap <Leader>gDM <Cmd>Git diff --stat master..HEAD<CR>
 
 nnoremap <Leader>gll <Cmd>Git log --decorate --oneline --graph<CR>
 nnoremap <Leader>glm <Cmd>Git log --decorate --oneline --graph main^..HEAD<CR>
