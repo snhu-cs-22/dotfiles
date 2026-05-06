@@ -92,7 +92,9 @@ nnoremap <Leader>g2n <Cmd>Git bisect new<CR>
 nnoremap <Leader>g2r <Cmd>Git bisect reset<CR>
 
 nnoremap <Leader>gdd <Cmd>Git diff<CR>
+nnoremap <Leader>gds <Cmd>Git diff --staged<CR>
 nnoremap <Leader>gDD <Cmd>Git diff --stat<CR>
+nnoremap <Leader>gDs <Cmd>Git diff --stat --staged<CR>
 nnoremap <Leader>gdm <Cmd>Git diff main..HEAD<CR>
 nnoremap <Leader>gdM <Cmd>Git diff master..HEAD<CR>
 nnoremap <Leader>gDm <Cmd>Git diff --stat main..HEAD<CR>
