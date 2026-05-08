@@ -79,53 +79,8 @@ nnoremap <Leader>e <Cmd>FZF<CR>
 " vim-fugitive
 nnoremap <Leader>gs <Cmd>Git<CR>
 nnoremap <Leader>gI <Cmd>Git init<CR>
-nnoremap <Leader>grf <Cmd>Git reflog<CR>
-nnoremap <Leader>gbr <Cmd>Git branch -a<CR>
 nnoremap <Leader>gbl <Cmd>Git blame<CR>
 nnoremap <Leader>gBL <Cmd>Git blame -w -C -C -C<CR>
-
-nnoremap <Leader>g2<space> :Git bisect<Space>
-nnoremap <Leader>g2s <Cmd>Git bisect start
-nnoremap <Leader>g2b <Cmd>Git bisect bad<CR>
-nnoremap <Leader>g2g <Cmd>Git bisect good<CR>
-nnoremap <Leader>g2o <Cmd>Git bisect old<CR>
-nnoremap <Leader>g2n <Cmd>Git bisect new<CR>
-nnoremap <Leader>g2r <Cmd>Git bisect reset<CR>
-
-nnoremap <Leader>gd<space> :Git diff<Space>
-nnoremap <Leader>gdd <Cmd>Git diff<CR>
-nnoremap <Leader>gds <Cmd>Git diff --staged<CR>
-nnoremap <Leader>gDD <Cmd>Git diff --stat<CR>
-nnoremap <Leader>gDs <Cmd>Git diff --stat --staged<CR>
-nnoremap <Leader>gdm <Cmd>Git diff main..HEAD<CR>
-nnoremap <Leader>gdM <Cmd>Git diff master..HEAD<CR>
-nnoremap <Leader>gDm <Cmd>Git diff --stat main..HEAD<CR>
-nnoremap <Leader>gDM <Cmd>Git diff --stat master..HEAD<CR>
-
-nnoremap <Leader>gl<space> :Git log --decorate --oneline --graph<Space>
-nnoremap <Leader>gll <Cmd>Git log --decorate --oneline --graph<CR>
-nnoremap <Leader>glm <Cmd>Git log --decorate --oneline --graph main^..HEAD<CR>
-nnoremap <Leader>glM <Cmd>Git log --decorate --oneline --graph master^..HEAD<CR>
-nnoremap <Leader>gl% <Cmd>Git log --decorate --oneline --graph --follow -- %<CR>
-nnoremap <Leader>gLL <Cmd>Git log --decorate --oneline --graph --stat<CR>
-nnoremap <Leader>gLm <Cmd>Git log --decorate --oneline --graph --stat main^..HEAD<CR>
-nnoremap <Leader>gLM <Cmd>Git log --decorate --oneline --graph --stat master^..HEAD<CR>
-nnoremap <Leader>gL% <Cmd>Git log --decorate --oneline --graph --follow -- %<CR>
-
-nnoremap <Leader>grm <Cmd>Git rebase main<CR>
-nnoremap <Leader>grM <Cmd>Git rebase master<CR>
-nnoremap <Leader>grim <Cmd>Git rebase main -i --autosquash<CR>
-nnoremap <Leader>griM <Cmd>Git rebase master -i --autosquash<CR>
-
-nnoremap <Leader>gfo <Cmd>Git fetch origin<CR>
-nnoremap <Leader>gplo <Cmd>Git pull origin<CR>
-nnoremap <Leader>gpso <Cmd>Git push origin<CR>
-
-nnoremap <Leader>ga<space> :Git absorb<Space>
-nnoremap <Leader>gam <Cmd>Git absorb -b main -Fn<CR>
-nnoremap <Leader>gaM <Cmd>Git absorb -b master -Fn<CR>
-nnoremap <Leader>gAm <Cmd>Git absorb -b main -F<CR>
-nnoremap <Leader>gAM <Cmd>Git absorb -b master -F<CR>
 
 " vim-gitgutter
 nmap <Leader>ghp <Plug>(GitGutterPreviewHunk)
