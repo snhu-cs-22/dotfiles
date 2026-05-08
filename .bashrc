@@ -146,7 +146,7 @@ alias v='nvim'
 # Dotfiles git repo
 
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-alias dotfiles-vim='GIT_DIR="$HOME/.dotfiles/" GIT_WORK_TREE="$HOME" nvim -S "$HOME/.config/nvim/session/dotfiles.vim"'
+alias dotfiles-vim='GIT_DIR="$HOME/.dotfiles/" GIT_WORK_TREE="$HOME" nvim -c "ReadSession $HOME/.config/nvim/session/dotfiles.vim"'
 alias df=dotfiles
 alias dfv=dotfiles-vim
 
