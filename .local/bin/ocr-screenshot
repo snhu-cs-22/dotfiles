@@ -1,0 +1,7 @@
+#!/bin/bash
+set -euo pipefail
+
+TEXT=$(gnome-screenshot -a -f /tmp/screenshot.png &&
+	tesseract /tmp/screenshot.png - -l jpn_vert+jpn+eng -c preserve_interword_spaces=1)
+notify-send "Copied OCR Text to Clipboard" "$TEXT"
+echo "$TEXT" | xclip -selection clipboard

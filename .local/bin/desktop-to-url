@@ -1,0 +1,17 @@
+#!/bin/bash
+sed -i '1s/Desktop Entry/InternetShortcut/' "$@"
+for i in "$@"; do
+	new_file="${i/%.desktop/.url}"
+
+	# Forbidden characters in Windows file paths
+	new_file="${new_file//\</_}"
+	new_file="${new_file//\>/_}"
+	new_file="${new_file//\:/_}"
+	new_file="${new_file//\"/_}"
+	new_file="${new_file//\\/_}"
+	new_file="${new_file//\|/_}"
+	new_file="${new_file//\?/_}"
+	new_file="${new_file//\*/_}"
+
+	mv "$i" "$new_file"
+done
