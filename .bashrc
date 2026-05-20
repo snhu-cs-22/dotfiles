@@ -132,6 +132,7 @@ fi
 
 PATH=$PATH:/opt/zig
 PATH=$PATH:/opt/android-studio/bin
+PATH=$PATH:/usr/local/go/bin
 
 # Editors
 
