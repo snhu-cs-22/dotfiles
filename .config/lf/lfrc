@@ -40,7 +40,7 @@ cmap <c-f>    fuzzy-history-search
 map W         !true
 map S         source ~/.config/lf/lfrc
 map =         push :chmod<space>
-map +         push :mkdir<space>
+map +         push :touch<space>
 map *         push :glob-select<space>
 map \#        push :glob-unselect<space>
 map x         $"$f"
@@ -348,9 +348,17 @@ cmd trash-restore %{{
 	printf ' %s' $(basename -a -- $fx)
 }}
 
+cmd touch %{{
+	IFS=" "
+	if [[ $* = */ ]]; then
+		mkdir -p -- "$*"
+	else
+		touch -- "$*"
+	fi
+}}
+
 cmd bulkrename $set -f; vidir -- $fx
 cmd chmod %set -f; chmod "$@" -- $fx
-cmd mkdir %IFS=" "; mkdir -p -- "$*"
 cmd suspend $kill -STOP "$PPID"
 cmd inspect $LESSOPEN='| ~/.config/lf/scope-lf-wrapper.sh %s' less -R "$f"
 cmd drag-and-drop &dragon $fx
