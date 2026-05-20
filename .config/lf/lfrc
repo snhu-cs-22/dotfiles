@@ -130,7 +130,7 @@ map g?        cd /usr/share/doc/lf
 
 # Setting file info
 map M
-map MM        set info custom
+map MC        set info custom
 map Ma        set info atime
 map Mc        set info ctime
 map Ms        set info size
