@@ -188,7 +188,7 @@ cmd on-cd &{{
 	GIT_PS1_SHOWCONFLICTSTATE=auto
 	GIT_PS1_DESCRIBE_STYLE='branch'
 	git="$(__git_ps1 " (%s)")" || true
-	fmt="\033[32;1m%u@%h\033[0m:\033[34;1m%w\033[0m$git\033[0m"
+	fmt="\033[32;1m%u@%h\033[0m:\033[34;1m%d\033[0m\033[1m%f\033[0m$git\033[0m"
 	lf -remote "send $id set promptfmt \"$fmt\""
 }}
 
