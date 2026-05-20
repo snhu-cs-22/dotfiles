@@ -357,7 +357,7 @@ cmd touch %{{
 	fi
 }}
 
-cmd bulkrename $set -f; vidir -- $fx
+cmd bulkrename $set -f; printf "%s\n" $fx | sed "s|^$PWD/||" | vidir -
 cmd chmod %set -f; chmod "$@" -- $fx
 cmd suspend $kill -STOP "$PPID"
 cmd inspect $LESSOPEN='| ~/.config/lf/scope-lf-wrapper.sh %s' less -R "$f"
