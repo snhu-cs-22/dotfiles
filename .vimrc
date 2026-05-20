@@ -547,8 +547,8 @@ nnoremap <Leader>sJp <Cmd>%s/\(\S\)\n\(\S\)/\1 \2/g<CR>
 vnoremap <Leader>sJp <Cmd>s/\(\S\)\n\(\S\)/\1 \2/g<CR>
 
 " Turn into "Title Caps" (Stolen from Vim documentation. See: case)
-nnoremap <Leader>sU <Cmd>s/\v<(.)(\w*)/\u\1\L\2/
-vnoremap <Leader>sU <Cmd>s/\v<(.)(\w*)/\u\1\L\2/g<CR>
+nnoremap <Leader>sU :s/\v<(.)(\w*)/\u\1\L\2/g
+vnoremap <Leader>sU :s/\v<(.)(\w*)/\u\1\L\2/g
 
 " Turn "smart quotes" into regular quotes
 nnoremap <Leader>sq <Cmd>%s/“\\|”/"/g\|%s/‘\\|’/'/g<CR>
