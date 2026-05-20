@@ -145,6 +145,7 @@ map zm        set mouse!
 map zi        set ignorecase!
 map zs        set smartcase!
 map zf        push :setfilter<space>
+map zn        :set number!; set relativenumber!
 
 # }}}
 
