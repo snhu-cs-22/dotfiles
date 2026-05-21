@@ -31,8 +31,10 @@ nnoremap <buffer> gLL <Cmd>Git log --decorate --oneline --graph --stat<CR>
 nnoremap <buffer> gLm <Cmd>Git log --decorate --oneline --graph --stat main^..HEAD<CR>
 nnoremap <buffer> gLM <Cmd>Git log --decorate --oneline --graph --stat master^..HEAD<CR>
 
+nnoremap <buffer> gr<space> :Git rebase --autostash
 nnoremap <buffer> grm <Cmd>Git rebase main --autostash<CR>
 nnoremap <buffer> grM <Cmd>Git rebase master --autostash<CR>
+nnoremap <buffer> gri<space> :Git rebase -i --autosquash --autostash
 nnoremap <buffer> grim <Cmd>Git rebase main -i --autosquash --autostash<CR>
 nnoremap <buffer> griM <Cmd>Git rebase master -i --autosquash --autostash<CR>
 
