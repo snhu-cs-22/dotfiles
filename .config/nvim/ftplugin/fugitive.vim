@@ -27,11 +27,9 @@ nnoremap <buffer> glr <Cmd>Git reflog<CR>
 nnoremap <buffer> gll <Cmd>Git log --decorate --oneline --graph<CR>
 nnoremap <buffer> glm <Cmd>Git log --decorate --oneline --graph main^..HEAD<CR>
 nnoremap <buffer> glM <Cmd>Git log --decorate --oneline --graph master^..HEAD<CR>
-nnoremap <buffer> gl% <Cmd>Git log --decorate --oneline --graph --follow -- %<CR>
 nnoremap <buffer> gLL <Cmd>Git log --decorate --oneline --graph --stat<CR>
 nnoremap <buffer> gLm <Cmd>Git log --decorate --oneline --graph --stat main^..HEAD<CR>
 nnoremap <buffer> gLM <Cmd>Git log --decorate --oneline --graph --stat master^..HEAD<CR>
-nnoremap <buffer> gL% <Cmd>Git log --decorate --oneline --graph --follow -- %<CR>
 
 nnoremap <buffer> grm <Cmd>Git rebase main<CR>
 nnoremap <buffer> grM <Cmd>Git rebase master<CR>

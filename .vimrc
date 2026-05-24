@@ -81,6 +81,8 @@ nnoremap <Leader>gs <Cmd>Git<CR>
 nnoremap <Leader>gI <Cmd>Git init<CR>
 nnoremap <Leader>gbl <Cmd>Git blame<CR>
 nnoremap <Leader>gBL <Cmd>Git blame -w -C -C -C<CR>
+nnoremap <Leader>gl% <Cmd>Git log --decorate --oneline --graph --follow -- %<CR>
+nnoremap <Leader>gL% <Cmd>Git log --decorate --oneline --graph --follow -- %<CR>
 
 " vim-gitgutter
 nmap <Leader>ghp <Plug>(GitGutterPreviewHunk)
