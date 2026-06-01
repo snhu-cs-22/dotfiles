@@ -229,7 +229,7 @@ cmd paste-shell %{{
 	files=$(echo "$load" | tail -n+2)
 
 	flags=()
-	if [ ! -z "$@" ] && [ "$1" = '--overwrite' ]; then
+	if [[ ! -z "$*" ]] && [ "$1" = '--overwrite' ]; then
 		flags+=(--update=all)
 	else
 		flags+=(--backup=numbered)
@@ -280,7 +280,7 @@ cmd follow-link %{{
 cmd paste-link %{{
 	set -f
 	files=$(cat ~/.local/share/lf/files | tail -n+2)
-	if [ -z "$@" ]; then
+	if [[ -z "$*" ]]; then
 		ln -si $files . && exit
 	fi
 	case "$1" in
