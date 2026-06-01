@@ -1,12 +1,26 @@
 #!/bin/bash
+set -euo pipefail
 IFS=$'\n'
+
+flags=()
+while [[ ! -z "$*" ]] && [ ! -f "$1" ]; do
+	flags+=("$1")
+	shift
+done
+
+if [[ -z "$*" ]] || [ "${flags[0]:-}" = '--help' ] || [ "${flags[0]:-}" = '-h' ]; then
+	echo "Usage: $(basename "$0") [FLAGS] FILE..."
+	echo "Opens Windows .url files in Firefox. [FLAGS] are passed to Firefox."
+	exit
+fi
+
 urls="$(grep -hi '^url=' "$@" | cut -d'=' -f2-)"
 profile_selected=false
 for url in $urls; do
 	if [ "$profile_selected" = false ]; then
-		firefox --ProfileManager -- "$url"
+		firefox --ProfileManager "${flags[@]}" -- "$url"
 		profile_selected=true
 	else
-		firefox -- "$url" &
+		firefox "${flags[@]}" -- "$url" &
 	fi
 done

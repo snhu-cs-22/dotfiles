@@ -1,12 +1,2 @@
-#!/bin/bash
-IFS=$'\n'
-urls="$(grep -hi '^url=' "$@" | cut -d'=' -f2-)"
-profile_selected=false
-for url in $urls; do
-	if [ "$profile_selected" = false ]; then
-		firefox --ProfileManager --private-window -- "$url"
-		profile_selected=true
-	else
-		firefox --private-window  -- "$url" &
-	fi
-done
+#!/bin/sh
+open-url --private-window "$@"
