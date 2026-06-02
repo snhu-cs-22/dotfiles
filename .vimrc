@@ -178,6 +178,7 @@ if executable('git')
 		Plug 'mason-org/mason.nvim'
 		Plug 'neovim/nvim-lspconfig'
 		Plug 'mason-org/mason-lspconfig.nvim'
+		Plug 'saghen/blink.cmp', { 'branch': 'v1' }
 	else
 		Plug 'vim-scripts/AutoComplPop'
 		Plug 'BrandonRoehl/auto-omni'

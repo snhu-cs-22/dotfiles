@@ -11,3 +11,4 @@ vim.diagnostic.config({
 -- Config Neovim/Lua-based plugins
 require('config.plugins.mason')
 require('config.plugins.treesitter')
+require('config.plugins.blink')
