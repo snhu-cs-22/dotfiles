@@ -155,9 +155,7 @@ if executable('git')
 	Plug 'tpope/vim-unimpaired'
 
 	" Tweaks/wrappers
-	Plug 'vim-scripts/AutoComplPop'
 	Plug 'vim-airline/vim-airline'
-	Plug 'BrandonRoehl/auto-omni'
 	Plug 'tpope/vim-characterize'
 	Plug 'tpope/vim-obsession'
 	Plug 'kshenoy/vim-signature' " Marks in gutter
@@ -181,6 +179,8 @@ if executable('git')
 		Plug 'neovim/nvim-lspconfig'
 		Plug 'mason-org/mason-lspconfig.nvim'
 	else
+		Plug 'vim-scripts/AutoComplPop'
+		Plug 'BrandonRoehl/auto-omni'
 		Plug 'tpope/vim-commentary'
 	endif
 
