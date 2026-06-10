@@ -8,6 +8,7 @@ silent! let g:plugs['Colorizer'].commit = 'f5d69c0dea9f36e2eb025c7d86cc62b5a0d8a
 silent! let g:plugs['auto-omni'].commit = 'ff91f0285a9edc5d410ae41a57cc40a692d8a68b'
 silent! let g:plugs['blink.cmp'].commit = '78336bc89ee5365633bcf754d93df01678b5c08f'
 silent! let g:plugs['dbext.vim'].commit = '14f3d530b6189dc3f97edfa70b7a36006e21148c'
+silent! let g:plugs['friendly-snippets'].commit = '6cd7280adead7f586db6fccbd15d2cac7e2188b9'
 silent! let g:plugs['fzf'].commit = '259e841a77a8eb562444440a6f57ee5e89ec106e'
 silent! let g:plugs['fzf.vim'].commit = '34a564c81f36047f50e593c1656f4580ff75ccca'
 silent! let g:plugs['mason-lspconfig.nvim'].commit = 'a979821a975897b88493843301950c456a725982'
