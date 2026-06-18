@@ -77,7 +77,7 @@ nnoremap <Leader>u <Cmd>UndotreeToggle<CR>
 let g:fzf_vim = {}
 let g:fzf_vim.command_prefix = 'FZF'
 
-nnoremap <Leader>e <Cmd>FZF<CR>
+nnoremap <Leader>e <Cmd>FZFFiles<CR>
 nnoremap <Leader>b <Cmd>FZFBuffers<CR>
 nnoremap <Leader>ge <Cmd>FZFGFiles<CR>
 nnoremap <Leader>: <Cmd>FZFCommands<CR>
