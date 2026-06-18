@@ -24,7 +24,6 @@ silent! let g:plugs['vim-fugitive'].commit = '3b753cf8c6a4dcde6edee8827d464ba9b8
 silent! let g:plugs['vim-gitgutter'].commit = '55b368d4c68541775b4b253d3c98d3145b695c24'
 silent! let g:plugs['vim-markdown'].commit = 'f9f845f28f4da33a7655accb22f4ad21f7d9fb66'
 silent! let g:plugs['vim-obsession'].commit = 'ed9dfc7c2cc917ace8b24f4f9f80a91e05614b63'
-silent! let g:plugs['vim-oldfiles'].commit = '02480a8bbc080064a285a34060d1641907fa4cac'
 silent! let g:plugs['vim-polyglot'].commit = 'f061eddb7cdcc614c8406847b2bfb53099832a4e'
 silent! let g:plugs['vim-ps1'].commit = '839cec1550e09fc902c74103053e9e765051083d'
 silent! let g:plugs['vim-repeat'].commit = '65846025c15494983dafe5e3b46c8f88ab2e9635'

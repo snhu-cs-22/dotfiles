@@ -63,13 +63,6 @@ nnoremap <Leader>N <Cmd>NERDTreeToggle %:h<CR>
 " neosnippets
 " let g:neosnippet#snippets_directory = ""
 
-" Oldfiles
-" Close quickfix list when oldfile is opened
-augroup oldfiles
-	autocmd!
-	autocmd FileType qf if get(w:, 'quickfix_title') =~# 'Oldfiles' | nnoremap <buffer> <CR> <CR>:cclose<CR> | endif
-augroup END
-
 " undotree
 nnoremap <Leader>u <Cmd>UndotreeToggle<CR>
 
@@ -167,7 +160,6 @@ if executable('git')
 	Plug 'BrandonRoehl/auto-omni'
 	Plug 'tpope/vim-characterize'
 	Plug 'tpope/vim-obsession'
-	Plug 'gpanders/vim-oldfiles'
 	Plug 'kshenoy/vim-signature' " Marks in gutter
 	Plug 'mbbill/undotree'
 
