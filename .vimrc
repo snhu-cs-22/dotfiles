@@ -74,7 +74,18 @@ augroup END
 nnoremap <Leader>u <Cmd>UndotreeToggle<CR>
 
 " fzf
+let g:fzf_vim = {}
+let g:fzf_vim.command_prefix = 'FZF'
+
 nnoremap <Leader>e <Cmd>FZF<CR>
+nnoremap <Leader>b <Cmd>FZFBuffers<CR>
+nnoremap <Leader>ge <Cmd>FZFGFiles<CR>
+nnoremap <Leader>: <Cmd>FZFCommands<CR>
+nnoremap <Leader>ft <Cmd>FZFFiletypes<CR>
+nnoremap <Leader>h <Cmd>FZFHistory<CR>
+nnoremap <Leader>q: <Cmd>FZFHistory:<CR>
+nnoremap <Leader>q/ <Cmd>FZFHistory/<CR>
+nnoremap <Leader>? <Cmd>FZFHelptags<CR>
 
 " vim-fugitive
 nnoremap <Leader>gs <Cmd>Git<CR>
