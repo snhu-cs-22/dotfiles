@@ -308,12 +308,13 @@ cmd glob-select-recursive &{{
 }}
 
 cmd fuzzy-select ${{
-	file=$(fzf --prompt='Select file: ')
+	file=$(fzf --scheme=path --prompt='Select file: ')
 	$lf -remote "send $id select \"$file\""
 }}
 
 cmd fuzzy-cd ${{
 	dir=$(fzf \
+		--scheme=path \
 		--prompt='Select dir to cd to: ' \
 		--walker=dir,hidden,follow
 	)
@@ -325,7 +326,7 @@ cmd fuzzy-history-search ${{
 		lf -remote "query $id history" |
 		awk -F'\t' 'NR > 1 { print $NF }' |
 		sort -u |
-		fzf --prompt='Execute command: '
+		fzf --scheme=history --prompt='Execute command: '
 	)
 	lf -remote "send $id push ${cmd//\ /<space>}"
 }}
