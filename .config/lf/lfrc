@@ -8,7 +8,9 @@ set period 1
 set info size
 set icons
 set dircounts
-set cursorpreviewfmt "\033[7;7m"
+set cursoractivefmt "\033[7m"
+set cursorparentfmt "\033[7;2m"
+set cursorpreviewfmt "\033[7;2m"
 set numberfmt "\033[0m"
 set rulerfmt  "%a| %p| \033[7;31m %m \033[0m| \033[7;33m %c \033[0m| \033[7;35m %s \033[0m| \033[7;36m %v \033[0m|f=`%f',| %d|  %i/%t  %P"
 set infotimefmtnew "2006-01-02 15:04"
