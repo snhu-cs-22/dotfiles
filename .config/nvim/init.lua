@@ -4,6 +4,8 @@ vim.cmd('source ~/.vimrc')
 vim.o.winborder = "rounded"
 
 vim.diagnostic.config({
+  jump = { float = true },
+  severity_sort = true,
   virtual_text = true,
   underline = true
 })
