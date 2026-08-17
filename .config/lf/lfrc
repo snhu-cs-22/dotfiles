@@ -85,6 +85,7 @@ map dr        clipboard-remove --cut
 map dt        clipboard-toggle --cut
 map dD        delete
 map dT        trash
+map df        diff
 map dg        drag-and-drop
 map du        disk-usage
 map dU        disk-usage-recursive
@@ -361,6 +362,7 @@ cmd bulkrename $set -f; printf "%s\n" $fx | sed "s|^$PWD/||" | vidir -
 cmd chmod %set -f; chmod "$@" -- $fx
 cmd suspend $kill -STOP "$PPID"
 cmd inspect $LESSOPEN='| ~/.config/lf/scope-lf-wrapper.sh %s' less -R "$f"
+cmd diff $nvim -d $fx
 cmd drag-and-drop &dragon $fx
 cmd disk-usage !du -chs --apparent-size -- $fx | sort -h
 cmd disk-usage-recursive !du -ch --apparent-size -- $fx | sort -h
