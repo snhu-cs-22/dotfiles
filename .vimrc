@@ -312,6 +312,7 @@ set nowrap
 set textwidth=0
 set linebreak
 set breakindent
+set diffopt+=followwrap
 
 " 3.1.1 Default statusline (overridden by vim-airline plugin) {{{
 set laststatus=2
